@@ -10,7 +10,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                echo 'Récupération du code source'
+                echo 'ikram Récupération du code source'
                 checkout scm
             }
         }
@@ -25,10 +25,10 @@ pipeline {
 
     post {
         success {
-            echo 'BUILD SUCCESS 🎉'
+            echo 'BUILD SUCCESS '
         }
         failure {
-            echo 'BUILD FAILED ❌'
+            echo 'BUILD FAILED '
         }
     }
 }
