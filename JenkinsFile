@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+
+    tools {
+        jdk 'Java17'
+        maven 'Maven'
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                echo 'Récupération du code source'
+                checkout scm
+            }
+        }
+
+        stage('Build & Test') {
+            steps {
+                echo 'Compilation et exécution des tests'
+                sh 'mvn clean test'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'BUILD SUCCESS 🎉'
+        }
+        failure {
+            echo 'BUILD FAILED ❌'
+        }
+    }
+}
