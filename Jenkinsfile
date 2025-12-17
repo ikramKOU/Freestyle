@@ -18,7 +18,7 @@ pipeline {
 
         stage('Build & Test') {
             steps {
-                echo '--- haha ikramm ------Compilation et exécution des tests'
+                echo '--- haha ikjjjjjramm ------Compilation et exécution des tests'
                 sh 'java -version'
                 sh 'mvn -version'
             }
