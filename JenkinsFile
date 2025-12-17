@@ -10,7 +10,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                echo 'ikram Récupération du code source'
+                echo 'ikram last Récupération du code source'
                 checkout scm
             }
         }
