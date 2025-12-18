@@ -14,7 +14,7 @@ pollSCM('H/5 * * * *')
 
         stage('Checkout') {
             steps {
-                echo 'Récupération du code source'
+                echo 'Récupération du  source'
                 checkout scm
             }
         }
