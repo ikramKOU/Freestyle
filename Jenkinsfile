@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
 
@@ -7,30 +6,35 @@ pipeline {
         maven 'Maven'
     }
 
+    triggers {
+        pollSCM('H/5')
+    }
+
     stages {
 
         stage('Checkout') {
             steps {
-                echo 'ikram last  UUyy Récupération du code source'
+                echo 'Récupération du code source'
                 checkout scm
             }
         }
 
         stage('Build & Test') {
             steps {
-                echo '--- haha ikjjjjjramvvlooolvvm ------Compilation et exécution des tests'
-                sh 'java -version'
-                sh 'mvn -version'
+                echo 'Compilation et exécution des tests'
+                bat 'java -version'
+                bat 'mvn -version'
+                bat 'mvn clean package'
             }
         }
     }
 
     post {
         success {
-            echo 'BUILD ------------------SUCCESS '
+            echo 'BUILD SUCCESS ✅'
         }
         failure {
-            echo 'BUILD FAILED '
+            echo 'BUILD FAILED ❌'
         }
     }
 }
