@@ -1,14 +1,9 @@
-name: Deploy website
+name: Deploy
 
 on:
   workflow_run:
     workflows: ["Test"]
     types: [completed]
-
-permissions:
-  contents: write
-  pages: write
-  id-token: write
 
 jobs:
   deploy:
@@ -17,19 +12,12 @@ jobs:
 
     steps:
       - name: Download artifact
-        uses: dawidd6/action-download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
-          workflow: build.yml
           name: calculator-jar
           path: dist
 
-      - name: Prepare site
+      - name: Deploy (simple)
         run: |
-          mkdir site
-          cp dist/*.jar site/
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: site
+          echo "Deploying..."
+          ls -la dist

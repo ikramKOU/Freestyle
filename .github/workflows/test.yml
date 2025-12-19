@@ -13,8 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup JDK 17
-        uses: actions/setup-java@v4
+      - uses: actions/setup-java@v4
         with:
           java-version: "17"
           distribution: "temurin"
@@ -22,3 +21,12 @@ jobs:
 
       - name: Run tests
         run: mvn test
+
+      - name: Package JAR
+        run: mvn package -DskipTests
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: calculator-jar
+          path: target/*.jar
