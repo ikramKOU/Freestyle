@@ -1,21 +1,20 @@
 name: Deploy website
 
 on:
-  push:
-    branches: [ "main" ]
+  workflow_run:
+    workflows: ["Test"]   # 👈 dépend du workflow Test
+    types:
+      - completed
 
 jobs:
-  
   deploy:
-    needs: test
-    runs-on: ubuntu-latest
-    
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: site
+          name: calculator-jar
           path: dist
 
       - name: Setup SSH
@@ -27,4 +26,5 @@ jobs:
 
       - name: Deploy
         run: |
-          rsync -avz dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}
+          rsync -avz dist/ \
+          ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}
