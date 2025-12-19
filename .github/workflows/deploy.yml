@@ -1,15 +1,22 @@
 name: Deploy
 
 on:
-  workflow_run:
-    workflows: ["Test"]
-    types: [completed]
+  push:
+    branches: [ "main" ]
 
 jobs:
-  deploy:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    runs-on: ubuntu-latest
+  build_job:
+    uses: ./.github/workflows/build.yml  
 
+  test_job:
+    needs: build_job
+    uses: ./.github/workflows/test.yml  
+    with:
+      build-artifact: "calculator-jar"
+
+  deploy_job:
+    needs: test_job
+    runs-on: ubuntu-latest
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
@@ -17,7 +24,7 @@ jobs:
           name: calculator-jar
           path: dist
 
-      - name: Deploy (simple)
+      - name: Deploy
         run: |
-          echo "Deploying..."
+          echo "Deploying artifact..."
           ls -la dist
