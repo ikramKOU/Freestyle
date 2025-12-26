@@ -52,7 +52,7 @@ pipeline {
         HOST_PORT = "8081"
         CONTAINER_PORT = "8080"
     }
-
+    
     stages {
 
         stage('Checkout') {
