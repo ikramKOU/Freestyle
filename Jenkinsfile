@@ -69,7 +69,7 @@ pipeline {
                 bat 'mvn -version'
                 bat 'mvn clean package -DskipTests'
             }
-        }
+        } 
 
         stage('Test') {
             steps {
