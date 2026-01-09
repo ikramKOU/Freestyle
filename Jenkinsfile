@@ -96,14 +96,16 @@ pipeline {
             }
         }
 
-    stage('SonarQube Analysis') {
+        stage('SonarQube Analysis') {
     steps {
         withSonarQubeEnv('SonarQube') {
-            bat """
-                mvn clean verify ^
-                org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.1.2184:sonar ^
-                -Dsonar.projectKey=%SONAR_PROJECT_KEY%
-            """
+            bat '''
+            mvn clean verify ^
+            org.sonarsource.scanner.maven:sonar-maven-plugin:3.10.0.2594:sonar ^
+            -Dsonar.projectKey=%SONAR_PROJECT_KEY% ^
+            -Dsonar.projectName=TP4-Java ^
+            -Dsonar.host.url=%SONAR_HOST_URL%
+            '''
         }
     }
 }
