@@ -137,10 +137,10 @@ pipeline {
 
     post {
         success {
-            echo '✅ TP4 réussi : build, tests, SonarQube et Quality Gate OK'
+            echo ' TP4 réussi : build, tests, SonarQube et Quality Gate OK'
         }
         failure {
-            echo '❌ Pipeline bloqué : erreur ou Quality Gate FAIL'
+            echo ' Pipeline bloqué : erreur ou Quality Gate FAIL'
         }
     }
 }
