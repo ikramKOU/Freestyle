@@ -96,7 +96,7 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
+      stage('SonarQube Analysis') {
     steps {
         withSonarQubeEnv('SonarQube') {
             bat """
@@ -107,6 +107,7 @@ pipeline {
         }
     }
 }
+
 
         stage('Quality Gate') {
             steps {
