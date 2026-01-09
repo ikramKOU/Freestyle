@@ -97,15 +97,20 @@ pipeline {
         }
 
         stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('SonarQube') {
-                    bat """
-                        mvn -B org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.1.2184:sonar ^
-                        -Dsonar.projectKey=${SONAR_PROJECT_KEY}
-                    """
-                }
+    steps {
+        withSonarQubeEnv('SonarQube') {
+            withCredentials([string(credentialsId: 'sonar_token', variable: 'SONAR_TOKEN')]) {
+                bat """
+                mvn clean verify ^
+                org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.1.2184:sonar ^
+                -Dsonar.projectKey=${SONAR_PROJECT_KEY} ^
+                -Dsonar.login=%SONAR_TOKEN%
+                """
             }
         }
+    }
+}
+
 
 
 
