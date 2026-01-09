@@ -125,7 +125,7 @@ pipeline {
 
         stage('Deploy (Local Docker)') {
             steps {
-                echo 'Déploiement du conteneur Docker'
+                echo 'Déploiement  conteneur Docker'
                 bat '''
                 docker stop %CONTAINER_NAME% || exit 0
                 docker rm %CONTAINER_NAME% || exit 0
