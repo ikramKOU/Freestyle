@@ -60,7 +60,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                echo 'Récupération du code source'
+                echo 'Récupnode source'
                 checkout scm
             }
         }
