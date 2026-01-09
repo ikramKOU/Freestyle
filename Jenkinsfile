@@ -38,6 +38,7 @@
 //         }
 //     }
 // }
+
 pipeline {
     agent any
 
@@ -47,12 +48,14 @@ pipeline {
     }
 
     environment {
+        SONAR_PROJECT_KEY = "tp4-java-project"
+
         IMAGE_NAME = "tp3-java-app:latest"
         CONTAINER_NAME = "tp3-java-container"
         HOST_PORT = "8081"
         CONTAINER_PORT = "8080"
     }
-    
+
     stages {
 
         stage('Checkout') {
@@ -69,7 +72,7 @@ pipeline {
                 bat 'mvn -version'
                 bat 'mvn clean package -DskipTests'
             }
-        } 
+        }
 
         stage('Test') {
             steps {
@@ -83,6 +86,35 @@ pipeline {
             }
         }
 
+        stage('Test GitHub Credential') {
+            steps {
+                withCredentials([
+                    string(credentialsId: 'tokentp4', variable: 'GITHUB_TOKEN')
+                ]) {
+                    bat 'echo Token récupéré mais masqué dans les logs'
+                }
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    bat """
+                    mvn -B sonar:sonar ^
+                    -Dsonar.projectKey=%SONAR_PROJECT_KEY%
+                    """
+                }
+            }
+        }
+
+        stage('Quality Gate') {
+            steps {
+                timeout(time: 2, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+// OUTIL LI KAYCHOF PROJET AKML KAYVERIFIER LIH LES TEST  /// jacoco ;;; il faut le cond=fugurer 
         stage('Docker Build') {
             steps {
                 echo 'Construction de l’image Docker'
@@ -104,10 +136,10 @@ pipeline {
 
     post {
         success {
-            echo '✅ Déploiement local terminé avec succès'
+            echo '✅ TP4 réussi : build, tests, SonarQube et Quality Gate OK'
         }
         failure {
-            echo '❌ Erreur dans le pipeline'
+            echo '❌ Pipeline bloqué : erreur ou Quality Gate FAIL'
         }
     }
 }
