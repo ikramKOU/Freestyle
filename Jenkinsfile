@@ -118,7 +118,7 @@ pipeline {
 // OUTIL LI KAYCHOF PROJET AKML KAYVERIFIER LIH LES TEST  /// jacoco ;;; il faut le cond=fugurer 
         stage('Docker Build') {
             steps {
-                echo 'Construction de l’image Docker'
+                echo 'Constr uction de l’image Docker'
                 bat 'docker build -t %IMAGE_NAME% .'
             }
         }
