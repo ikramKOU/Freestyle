@@ -91,7 +91,7 @@ pipeline {
                 withCredentials([
                     string(credentialsId: 'tokentp4', variable: 'GITHUB_TOKEN')
                 ]) {
-                    bat 'echo Token récupéré mais masqué dans les logs'
+                    bat 'echo Token  mais masqué dans les logs'
                 }
             }
         }
