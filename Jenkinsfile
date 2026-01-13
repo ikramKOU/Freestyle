@@ -66,7 +66,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                echo 'Exécution des tests unitaires'
+                echo 'Exécution  tests unitaires'
                 bat 'mvn test'
             }
             post {
